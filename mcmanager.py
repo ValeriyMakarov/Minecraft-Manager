@@ -17,14 +17,16 @@
     4. mcmanager rc move - сохраняет содержимое папки и очищает её от файлов майнкрафта
 Добавить имя можно переместив файлы с помощью команды move и ключа 'c' или 'p', либо командой get из указанной папки:
     1. mcmanager p move new_name
-    2. mcmanager get your_path new_name
+    2. mcmanager get new_name your_path
 """
+from typing import Union
 import shutil
 import os
 import sys
 import time
 import subprocess
 import zipfile
+import re
 
 
 r'"C:\Program Files\WinRAR\rar.exe" a C:\Users\Lenovo\Desktop\test1 C:\Users\Lenovo\Desktop\hello'
@@ -70,8 +72,43 @@ r'"C:\Program Files\Minecraft Manager"'
 7. Хранить текущее имя, если его нет при свапе, запрашивать у пользователя
 исходить из списка
 '''
-print(__doc__)
-if __name__ != '__main__':
+COMMANDS = {'get', 'move', 'ls', 'help'}
+KEYS = {'a', 'c', 'p', 'r', 's'}
+names_list = []
+
+def parse_args(args: Union[list, str]):
+    if isinstance(args, str):
+        args = args.split()
+
+    for i, arg in enumerate(args[1:3]):
+        if arg in COMMANDS:
+            command = arg
+            command_position = i
+            break
+    else:
+        raise Exception(...)
+
+    if command_position:
+        for key in args[1]:
+            if key not in KEYS:
+                raise Exception(...)
+    else:
+        keys = None
+    # проверить что нет лишних ключей?
+    if args[command_position+1] in names_list:
+        name = args[command_position+1]
+    else:
+        path = args[command_position+2]#не факт что есть индекс =None
+        if not os.path.isabs(path):
+            raise Exception(...)
+
+    if len(args[command_position + 2:]):
+        raise Exception(...)
+
+    return command, keys, name, path
+
+
+if __name__ == '__main__':
     files = sys.argv[1:]
     target = r'C:/Projects/trash/'
     print(files, target)
