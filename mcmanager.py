@@ -25,8 +25,6 @@ import os
 import sys
 import time
 import subprocess
-import zipfile
-import re
 
 
 r'"C:\Program Files\WinRAR\rar.exe" a C:\Users\Lenovo\Desktop\test1 C:\Users\Lenovo\Desktop\hello'
@@ -76,11 +74,12 @@ COMMANDS = {'get', 'move', 'ls', 'help'}
 KEYS = {'a', 'c', 'p', 'r', 's'}
 names_list = []
 
+
 def parse_args(args: Union[list, str]):
     if isinstance(args, str):
         args = args.split()
 
-    for i, arg in enumerate(args[1:3]):
+    for i, arg in enumerate(args):
         if arg in COMMANDS:
             command = arg
             command_position = i
@@ -88,27 +87,38 @@ def parse_args(args: Union[list, str]):
     else:
         raise Exception(...)
 
-    if command_position:
+    keys = set()
+    if command_position == 2:
         for key in args[1]:
-            if key not in KEYS:
+            if key in KEYS:
+                keys.add(key)
+            else:
                 raise Exception(...)
     else:
         keys = None
-    # проверить что нет лишних ключей?
-    if args[command_position+1] in names_list:
-        name = args[command_position+1]
-    else:
-        path = args[command_position+2]#не факт что есть индекс =None
-        if not os.path.isabs(path):
-            raise Exception(...)
 
-    if len(args[command_position + 2:]):
+    if len(args) <= command_position + 1:
+        return command, keys, None, None
+    next_element = args[command_position + 1]
+    name = None if os.path.sep in next_element else next_element
+
+    path = None if name else next_element
+    if len(args) <= command_position + 2:
+        return command, keys, name, path
+    next_element = args[command_position + 2]
+    if os.path.sep in next_element:
+        path = next_element
+    else:
+        raise Exception(...)
+
+    if len(args) > command_position + 3:
         raise Exception(...)
 
     return command, keys, name, path
 
 
 if __name__ == '__main__':
+    parse_args(sys.argv)
     files = sys.argv[1:]
     target = r'C:/Projects/trash/'
     print(files, target)
