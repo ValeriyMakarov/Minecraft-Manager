@@ -32,36 +32,43 @@ class MinecraftManager(unittest.TestCase):
         )
 
         self.assertTrue(isinstance(command, str),
-                        msg=(f'Тип данных должен быть str. '
-                             f'Текущий тип: {type(command)}.')
+                        msg=(
+                            f'Тип данных должен быть str. '
+                            f'Текущий тип: {type(command)}.')
                         )
         self.assertTrue(command == 'move',
-                        msg=(f'Имя команды должно быть "move". '
-                             f'Текущее имя: "{command}".')
+                        msg=(
+                            f'Имя команды должно быть "move". '
+                            f'Текущее имя: "{command}".')
                         )
         info(f'Имя команды верное.')
 
         self.assertTrue(isinstance(keys, set),
-                        msg=(f'Тип данных должен быть set. '
-                             f'Текущий тип: {type(keys)}.')
+                        msg=(
+                            f'Тип данных должен быть set. '
+                            f'Текущий тип: {type(keys)}.')
                         )
         self.assertTrue(all(isinstance(i, str) for i in keys),
-                        msg=(f'Тип данных в наборе ключей должен быть str. '
-                             f'Текущий набор: {keys}.')
+                        msg=(
+                            f'Тип данных в наборе ключей должен быть str. '
+                            f'Текущий набор: {keys}.')
                         )
         self.assertTrue(keys == {'a', 'p'},
-                        msg=(f"Набор ключей должен равняться {{'a','p'}}. "
-                             f"Текущий набор: {keys}.")
+                        msg=(
+                            f"Набор ключей должен равняться {{'a','p'}}. "
+                            f"Текущий набор: {keys}.")
                         )
         info(f'Набор ключей верный.')
 
         self.assertTrue(isinstance(name, str),
-                        msg=(f'Тип данных должен быть str. '
-                             f'Текущий тип: {type(name)}.')
+                        msg=(
+                            f'Тип данных должен быть str. '
+                            f'Текущий тип: {type(name)}.')
                         )
         self.assertTrue(command == 'move',
-                        msg=(f'Имя команды должно быть "gregtech". '
-                             f'Текущее имя: "{name}".')
+                        msg=(
+                            f'Имя команды должно быть "gregtech". '
+                            f'Текущее имя: "{name}".')
                         )
         info(f'Имя команды равно.')
 
