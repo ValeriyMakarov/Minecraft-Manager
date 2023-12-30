@@ -21,30 +21,48 @@ class MinecraftManager(unittest.TestCase):
         with self.assertRaises(InvalidCommandError) as e:
             mcmanager.parse_args('')
         print(e.exception)
-        self.assertEqual(str(e.exception), "Неверная команда. Список команд: ['get', 'help', 'ls', 'move'].")
+        self.assertEqual(
+            str(e.exception),
+            "Неверная команда. Список команд: ['get', 'help', 'ls', 'move'].")
         ...
 
     def test_args_parser_from_str(self):
-        command, keys, name, path = mcmanager.parse_args('mcmanager ap move gregtech')
+        command, keys, name, path = mcmanager.parse_args(
+            'mcmanager ap move gregtech'
+        )
 
         self.assertTrue(isinstance(command, str),
-                        msg=f'Тип данных должен быть str. Текущий тип: {type(command)}.')
+                        msg=(f'Тип данных должен быть str. '
+                             f'Текущий тип: {type(command)}.')
+                        )
         self.assertTrue(command == 'move',
-                        msg=f'Имя команды должно быть "move". Текущее имя: "{command}".')
+                        msg=(f'Имя команды должно быть "move". '
+                             f'Текущее имя: "{command}".')
+                        )
         info(f'Имя команды верное.')
 
         self.assertTrue(isinstance(keys, set),
-                        msg=f'Тип данных должен быть set. Текущий тип: {type(keys)}.')
+                        msg=(f'Тип данных должен быть set. '
+                             f'Текущий тип: {type(keys)}.')
+                        )
         self.assertTrue(all(isinstance(i, str) for i in keys),
-                        msg=f'Тип данных в наборе ключей должен быть str. Текущий набор: {keys}.')
+                        msg=(f'Тип данных в наборе ключей должен быть str. '
+                             f'Текущий набор: {keys}.')
+                        )
         self.assertTrue(keys == {'a', 'p'},
-                        msg=f"Набор ключей должен равняться {{'a','p'}}. Текущий набор: {keys}.")
+                        msg=(f"Набор ключей должен равняться {{'a','p'}}. "
+                             f"Текущий набор: {keys}.")
+                        )
         info(f'Набор ключей верный.')
 
         self.assertTrue(isinstance(name, str),
-                        msg=f'Тип данных должен быть str. Текущий тип: {type(name)}.')
+                        msg=(f'Тип данных должен быть str. '
+                             f'Текущий тип: {type(name)}.')
+                        )
         self.assertTrue(command == 'move',
-                        msg=f'Имя команды должно быть "gregtech". Текущее имя: "{name}".')
+                        msg=(f'Имя команды должно быть "gregtech". '
+                             f'Текущее имя: "{name}".')
+                        )
         info(f'Имя команды равно.')
 
         self.assertIsNone(path, msg=f'Переменная path должна содержать None.')
